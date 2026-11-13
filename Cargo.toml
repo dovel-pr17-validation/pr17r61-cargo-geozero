@@ -24,7 +24,7 @@ rust-version = "1.94.0"
 flatgeobuf = "5.0.0"
 geozero = { version = "0.14.0", default-features = false }
 
-base64 = "0.22.1"
+base64 = "0.23.1"
 byteorder = { version = "1.4.3", default-features = false }
 bytes = "1.11.1"
 fast-mvt = "0.6"
