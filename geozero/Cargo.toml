@@ -1,0 +1,143 @@
+[package]
+name = "geozero"
+description = "Zero-Copy reading and writing of geospatial data in WKT/WKB, GeoJSON, MVT, GDAL, and other formats."
+keywords = ["geo", "geojson", "gdal", "mvt", "postgis"]
+categories = [
+    "science::geo",
+    "parser-implementations",
+    "api-bindings",
+    "database",
+    "rendering::data-formats",
+]
+readme = "../README.md"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+homepage.workspace = true
+repository.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[package.metadata.docs.rs]
+all-features = true
+rustc-args = ["--cfg", "docsrs"]
+
+[features]
+default = ["with-geo", "with-geojson", "with-svg", "with-wkt"]
+with-csv = ["dep:csv", "with-wkt"]
+with-gdal = ["dep:gdal", "dep:gdal-sys"]
+with-gdal-bindgen = ["with-gdal", "gdal?/bindgen"]
+with-geo = ["dep:geo-types"]
+with-geojson = ["dep:geojson"]
+with-geos = ["dep:geos"]
+with-gpkg = ["with-wkb", "dep:sqlx", "sqlx?/sqlite"]
+with-gpx = ["dep:gpx"]
+with-mvt = ["dep:fast-mvt", "dep:base64", "dep:geo-types"]
+with-postgis-diesel = ["with-wkb", "dep:diesel", "dep:byteorder"]
+with-postgis-postgres = ["with-wkb", "dep:postgres-types", "dep:bytes"]
+with-postgis-sqlx = ["with-wkb", "dep:sqlx", "sqlx?/postgres"]
+with-shp = ["dep:byteorder", "dep:dbase"]
+with-svg = []
+with-tessellator = ["dep:lyon"]
+with-wkb = ["dep:scroll", "with-wkt"]
+with-wkt = ["dep:wkt"]
+
+[dependencies]
+log.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+
+# Optional dependencies
+base64 = { workspace = true, optional = true }
+byteorder = { workspace = true, optional = true }
+bytes = { workspace = true, optional = true }
+csv = { workspace = true, optional = true }
+dbase = { workspace = true, optional = true }
+diesel = { workspace = true, optional = true }
+fast-mvt = { workspace = true, optional = true }
+gdal = { workspace = true, optional = true }
+gdal-sys = { workspace = true, optional = true }
+geo-types = { workspace = true, optional = true }
+geojson = { workspace = true, optional = true }
+geos = { workspace = true, optional = true }
+gpx = { workspace = true, optional = true }
+lyon = { workspace = true, optional = true }
+postgres-types = { workspace = true, optional = true }
+scroll = { workspace = true, optional = true }
+sqlx = { workspace = true, optional = true }
+wkt = { workspace = true, optional = true }
+
+
+[dev-dependencies]
+geo.workspace = true
+hex.workspace = true
+kdbush.workspace = true
+postgres.workspace = true
+rstest.workspace = true
+seek_bufread.workspace = true
+sqlx = { workspace = true, features = ["runtime-tokio", "macros", "time", "postgres", "sqlite"] }
+tokio = { workspace = true, features = ["macros"] }
+wkt.workspace = true
+
+[lints]
+workspace = true
+
+[[test]]
+name = "gdal"
+path = "tests/gdal.rs"
+required-features = ["with-gdal"]
+
+[[test]]
+name = "geojson"
+path = "tests/geojson.rs"
+required-features = ["with-geojson", "with-wkt"]
+
+[[test]]
+name = "geopackage"
+path = "tests/geopackage.rs"
+required-features = ["with-gpkg", "with-wkt", "with-geo"]
+
+[[test]]
+name = "geos"
+path = "tests/geos.rs"
+required-features = ["with-geos"]
+
+[[test]]
+name = "geo_types"
+path = "tests/geo_types.rs"
+required-features = ["with-geo", "with-geojson"]
+
+[[test]]
+name = "geozero-api"
+path = "tests/geozero-api.rs"
+required-features = ["with-wkt"]
+
+[[test]]
+name = "kdbush"
+path = "tests/kdbush.rs"
+required-features = ["with-geojson"]
+
+[[test]]
+name = "mvt"
+path = "tests/mvt.rs"
+required-features = ["with-mvt", "with-geo", "with-geojson"]
+
+[[test]]
+name = "postgis"
+path = "tests/postgis.rs"
+required-features = ["with-wkb", "with-wkt", "with-geo"]
+
+[[test]]
+name = "gpx"
+path = "tests/gpx.rs"
+required-features = ["with-gpx", "with-wkt", "with-geojson"]
+
+[[test]]
+name = "shp-reader"
+path = "tests/shp-reader.rs"
+required-features = ["with-shp"]
+
+[[test]]
+name = "svg"
+path = "tests/svg.rs"
+required-features = ["with-svg"]

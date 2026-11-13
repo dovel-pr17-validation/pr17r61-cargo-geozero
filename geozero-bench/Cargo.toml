@@ -1,0 +1,38 @@
+[package]
+name = "geozero-bench"
+description = "GeoZero benchmarks"
+readme = "README.md"
+publish = false
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+homepage.workspace = true
+repository.workspace = true
+license.workspace = true
+
+[[bench]]
+name = "geobench"
+harness = false
+
+[[bench]]
+name = "mvtbench"
+harness = false
+
+[dependencies]
+criterion.workspace = true
+flatgeobuf.workspace = true
+futures-util.workspace = true
+gdal.workspace = true
+gdal-sys.workspace = true
+geo.workspace = true
+geo-types.workspace = true
+geojson = { workspace = true, default-features = true }
+geozero = { workspace = true, features = ["with-geo", "with-geojson", "with-geos", "with-gpkg", "with-mvt", "with-postgis-postgres", "with-postgis-sqlx"] }
+postgis.workspace = true
+postgres.workspace = true
+seek_bufread.workspace = true
+sqlx = { workspace = true, features = ["runtime-tokio", "postgres", "sqlite"] }
+tokio = { workspace = true, features = ["rt-multi-thread"] }
+
+[lints]
+workspace = true

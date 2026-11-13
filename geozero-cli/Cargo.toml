@@ -1,0 +1,31 @@
+[package]
+name = "geozero-cli"
+description = "Command line interface for GeoZero"
+readme = "README.md"
+default-run = "geozero"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+homepage.workspace = true
+repository.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[[bin]]
+name = "geozero"
+path = "src/main.rs"
+
+[dependencies]
+clap.workspace = true
+env_logger.workspace = true
+flatgeobuf.workspace = true
+geozero = { workspace = true, default-features = true, features = ["with-csv"] }
+tokio = { workspace = true, default-features = true, features = ["full"] }
+geo.workspace = true
+geoarrow-array = { workspace = true, features = ["geozero"] }
+geoarrow-schema.workspace = true
+geoparquet.workspace = true
+parquet.workspace = true
+
+[lints]
+workspace = true
